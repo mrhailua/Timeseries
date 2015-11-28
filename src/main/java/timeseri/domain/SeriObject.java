@@ -1,5 +1,6 @@
 package timeseri.domain;
 
+import java.util.Date;
 import java.util.List;
 
 public class SeriObject {
@@ -37,5 +38,15 @@ public class SeriObject {
 
 	public void setTransactionId(String transactionId) {
 		this.transactionId = transactionId;
+	}
+
+	public Object[] getSeriData() {
+		Object[] result = new Object[lineObjects.size()];
+		int i = 0;
+		for (LineObject obj : this.lineObjects) {
+			result[i] = new Object[] { obj.getDuration() };
+			i++;
+		}
+		return result;
 	}
 }

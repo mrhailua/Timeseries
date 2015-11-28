@@ -11,6 +11,8 @@ import org.springframework.beans.factory.InitializingBean;
 import org.springframework.stereotype.Service;
 
 import timeseri.domain.Configure;
+import timeseri.domain.LineObject;
+import timeseri.domain.SeriObject;
 import timeseri.domain.SeriesReport;
 
 import com.mongodb.BasicDBObject;
@@ -76,6 +78,23 @@ public class MongoService implements InitializingBean {
 		}
 
 		return result;
+	}
+
+	public SeriObject getSeri(String seriId) {
+
+		List<DBObject> lineObjects = pichinchaTimeseri.getCollection("inquirySeri")
+		        .find(new BasicDBObject("SeriId", seriId)).limit(300).sort(new BasicDBObject("TimeLapse", 1))
+		        .toArray();
+		List<LineObject> lines = new ArrayList<LineObject>();
+
+		for (DBObject dbobj : lineObjects) {
+			LineObject conf = new LineObject((String) dbobj.get("SeriId"), (String) dbobj.get("Data"),
+			        (Date) dbobj.get("actionDate"), (Long) dbobj.get("TimeLapse"));
+			lines.add(conf);
+
+		}
+
+		return new SeriObject(seriId, "", lines);
 	}
 
 }
