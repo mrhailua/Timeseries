@@ -21,13 +21,14 @@ public class MapInquirySeri {
 	public void map(SeriObject seriObject) {
 		List<DBObject> dbObjects = new ArrayList<DBObject>();
 		for (LineObject obj : seriObject.getLineObjects()) {
-			dbObjects.add(createSeri(obj, seriObject.getPhone(),seriObject.getTransactionId()));
+			dbObjects.add(createSeri(obj, seriObject.getPhone(), seriObject.getTransactionId()));
 		}
 		mongoService.insertSeri(dbObjects);
 	}
 
 	private DBObject createSeri(LineObject data, String phone, String transactionId) {
 		return new BasicDBObject("phone", phone).append("transactionId", transactionId)
-		        .append("SeriId", data.getSeriId()).append("Data", data.getData()).append("actionDate", data.getDate());
+		        .append("SeriId", data.getSeriId()).append("Data", data.getData()).append("actionDate", data.getDate())
+		        .append("TimeLapse", data.getDuration());
 	}
 }

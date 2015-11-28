@@ -7,12 +7,14 @@ public class LineObject {
 	private String seriId;
 	private String data;
 	private Date date;
+	private Long duration;
 
-	public LineObject(String seriId, String data, Date date) {
+	public LineObject(String seriId, String data, Date date, Long duration) {
 		super();
 		this.seriId = seriId;
 		this.data = data;
 		this.setDate(date);
+		this.setDuration(duration);
 	}
 
 	public String getSeriId() {
@@ -32,11 +34,19 @@ public class LineObject {
 	}
 
 	public Date getDate() {
-	    return date;
-    }
+		return date;
+	}
 
 	public void setDate(Date date) {
-	    this.date = date;
+		this.date = date;
+	}
+
+	public Long getDuration() {
+	    return duration;
+    }
+
+	public void setDuration(Long duration) {
+	    this.duration = duration;
     }
 
 }

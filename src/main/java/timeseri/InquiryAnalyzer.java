@@ -1,6 +1,7 @@
 package timeseri;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStreamReader;
@@ -25,15 +26,15 @@ public class InquiryAnalyzer {
 	@Autowired
 	private MapInquirySeri inquiryMapper;
 
-	public void analyze(List<String> files, String starter, String finish) throws FileNotFoundException {
-		for (String fileName : files) {
+	public void analyze(List<File> files, String starter, String finish) throws FileNotFoundException {
+		for (File fileName : files) {
 			analyze(fileName, starter, finish);
 		}
 	}
 
-	private void analyze(String fileName, String starter, String finish) throws FileNotFoundException {
+	private void analyze(File file, String starter, String finish) throws FileNotFoundException {
 		try {
-			FileInputStream fstream = new FileInputStream(fileName);
+			FileInputStream fstream = new FileInputStream(file);
 			BufferedReader br = new BufferedReader(new InputStreamReader(fstream));
 
 			List<LineObject> lineObjects = new ArrayList<LineObject>();
@@ -42,6 +43,7 @@ public class InquiryAnalyzer {
 			String phone = "";
 			String transactionId = "";
 			boolean isStart = false;
+			Date startTime = null;
 			while ((strLine = br.readLine()) != null) {
 				if (!isStart && strLine.contains(starter)) {
 					isStart = true;
@@ -49,6 +51,10 @@ public class InquiryAnalyzer {
 
 				if (isStart) {
 					Date actionDate = getDate(strLine);
+					if (startTime == null) {
+						startTime = actionDate;
+					}
+
 					if (strLine.contains("<mobileNumber>")) {
 						String tmpStr = StringUtils.remove(StringUtils.strip(strLine), "<mobileNumber>");
 						phone = StringUtils.remove(tmpStr, "</mobileNumber>");
@@ -60,13 +66,15 @@ public class InquiryAnalyzer {
 					}
 
 					if (actionDate != null) {
-						lineObjects.add(new LineObject(uuid, strLine, actionDate));
+						lineObjects.add(new LineObject(uuid, strLine, actionDate, actionDate.getTime()
+						        - startTime.getTime()));
 
 						if (strLine.contains(finish)) {
 							isStart = false;
 							inquiryMapper.map(new SeriObject(phone, transactionId, lineObjects));
 							phone = "";
 							transactionId = "";
+							startTime = null;
 							uuid = UUID.randomUUID().toString();
 							lineObjects.clear();
 						}

@@ -9,7 +9,6 @@
 	<packaging>jar</packaging>
 
 	<name>Timeseri</name>
-	<description>Java backend developer test - candidate version</description>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -96,5 +95,6 @@
 		</plugins>
 	</build>
 
+	<description>Time Seri Log analyze</description>
 </project>
 
