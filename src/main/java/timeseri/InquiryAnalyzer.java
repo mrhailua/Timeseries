@@ -14,6 +14,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import timeseri.domain.LineObject;
@@ -26,12 +27,13 @@ public class InquiryAnalyzer {
 	@Autowired
 	private MapInquirySeri inquiryMapper;
 
+	@Async
 	public void analyze(List<File> files, String starter, String finish) throws FileNotFoundException {
 		for (File fileName : files) {
 			analyze(fileName, starter, finish);
 		}
 	}
-
+	
 	private void analyze(File file, String starter, String finish) throws FileNotFoundException {
 		try {
 			FileInputStream fstream = new FileInputStream(file);
