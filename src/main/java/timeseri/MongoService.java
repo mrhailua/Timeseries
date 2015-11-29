@@ -83,18 +83,19 @@ public class MongoService implements InitializingBean {
 	public SeriObject getSeri(String seriId) {
 
 		List<DBObject> lineObjects = pichinchaTimeseri.getCollection("inquirySeri")
-		        .find(new BasicDBObject("SeriId", seriId)).limit(300).sort(new BasicDBObject("TimeLapse", 1))
-		        .toArray();
+		        .find(new BasicDBObject("SeriId", seriId)).limit(300).sort(new BasicDBObject("TimeLapse", 1)).toArray();
 		List<LineObject> lines = new ArrayList<LineObject>();
 
 		for (DBObject dbobj : lineObjects) {
-			LineObject conf = new LineObject((String) dbobj.get("SeriId"), (String) dbobj.get("Data"),
+			LineObject timelapse = new LineObject((String) dbobj.get("SeriId"), (String) dbobj.get("Data"),
 			        (Date) dbobj.get("actionDate"), (Long) dbobj.get("TimeLapse"));
-			lines.add(conf);
+			timelapse.setPhone((String) dbobj.get("phone"));
+			timelapse.setTransactionId((String) dbobj.get("transactionId"));
+			lines.add(timelapse);
 
 		}
 
-		return new SeriObject(seriId, "", lines);
+		return new SeriObject(lines);
 	}
 
 }

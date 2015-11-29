@@ -6,6 +6,8 @@ public class LineObject {
 
 	private String seriId;
 	private String data;
+	private String phone;
+	private String transactionId;
 	private Date date;
 	private Long duration;
 
@@ -13,6 +15,15 @@ public class LineObject {
 		super();
 		this.seriId = seriId;
 		this.data = data;
+		this.setDate(date);
+		this.setDuration(duration);
+	}
+	
+	public LineObject(String seriId, String data,String phone, Date date, Long duration) {
+		super();
+		this.seriId = seriId;
+		this.data = data;
+		this.phone = phone;
 		this.setDate(date);
 		this.setDuration(duration);
 	}
@@ -47,6 +58,22 @@ public class LineObject {
 
 	public void setDuration(Long duration) {
 	    this.duration = duration;
+    }
+
+	public String getPhone() {
+	    return phone;
+    }
+
+	public void setPhone(String phone) {
+	    this.phone = phone;
+    }
+
+	public String getTransactionId() {
+	    return transactionId;
+    }
+
+	public void setTransactionId(String transactionId) {
+	    this.transactionId = transactionId;
     }
 
 }

@@ -58,11 +58,17 @@ public class InquiryAnalyzer {
 					if (strLine.contains("<mobileNumber>")) {
 						String tmpStr = StringUtils.remove(StringUtils.strip(strLine), "<mobileNumber>");
 						phone = StringUtils.remove(tmpStr, "</mobileNumber>");
+						if (lineObjects.size() > 0) {
+							lineObjects.get(lineObjects.size() - 1).setPhone(phone);
+						}
 					}
 
 					if (strLine.contains("<transactionId>")) {
 						String tmpStr = StringUtils.remove(StringUtils.strip(strLine), "<transactionId>");
 						transactionId = StringUtils.remove(tmpStr, "</transactionId>");
+						if (lineObjects.size() > 0) {
+							lineObjects.get(lineObjects.size() - 1).setTransactionId(transactionId);
+						}
 					}
 
 					if (actionDate != null) {
@@ -71,7 +77,7 @@ public class InquiryAnalyzer {
 
 						if (strLine.contains(finish)) {
 							isStart = false;
-							inquiryMapper.map(new SeriObject(phone, transactionId, lineObjects));
+							inquiryMapper.map(new SeriObject(lineObjects));
 							phone = "";
 							transactionId = "";
 							startTime = null;

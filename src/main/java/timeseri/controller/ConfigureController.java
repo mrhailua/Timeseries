@@ -30,7 +30,7 @@ public class ConfigureController {
 	@Autowired
 	private MongoService mongoService;
 
-	@RequestMapping(value = "/configureList")
+	@RequestMapping(value = "/")
 	public ModelAndView home() {
 
 		final Map<String, Object> model = new HashMap<String, Object>();
@@ -47,7 +47,7 @@ public class ConfigureController {
 		mongoService.saveConfigure(new Configure(jobName, logFolder, startText, endText));
 		executeAnalyse(logFolder, startText, endText);
 		redirectAttributes.addFlashAttribute("message", String.format("Start to Import data"));
-		return "redirect:/configureList";
+		return "redirect:/";
 	}
 
 	@Async

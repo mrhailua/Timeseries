@@ -74,6 +74,14 @@ $(function () {
 	<script src="../../js/highcharts.js"></script>
 	<script src="../../js/exporting.js"></script>
 	<div class="container">
+		<nav class="navbar navbar-default">
+		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+	      <ul class="nav navbar-nav">
+	        <li><a href="/">Configure</a></li>
+	        <li><a href="/series">Time series </a></li>
+	      </ul>
+	      </div>
+	    </nav>
 		<div class="row">
 			<div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
 		</div>
@@ -88,13 +96,17 @@ $(function () {
 									<th width="5%">Index</th>
 									<th width="20%">Seri Id</th>
 									<th width="20%">Start Time</th>
-									<th width="20%">Time lapse</th>
+									<th width="10%">Time lapse</th>
+									<th width="10%" >Phone</th>
+									<th width="20%" >Transaction Id</th>
 								</tr>
 								<tr th:each="line : ${SeriObj.lineObjects}">
 									<td width="5%" th:text="${lineStat.index}"></td>
 									<td width="20%" th:text="${line.seriId}"></td>
 									<td width="20%" th:text="${#calendars.format(line.date, 'yyyy-MM-dd hh:mm:ss,SSS')}"></td>
-									<td width="20%" th:text="${line.duration}"></td>
+									<td width="10%" th:text="${line.duration}"></td>
+									<td width="10%" th:text="${line.phone}"></td>
+									<td width="20%" th:text="${line.transactionId}"></td>
 								</tr>
 							</tbody>
 						</table>
