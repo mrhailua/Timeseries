@@ -100,16 +100,14 @@ $(function () {
 									<th width="10%">Time lapse</th>
 									<th width="10%" >Phone</th>
 									<th width="10%" >Transaction Id</th>
-									<th width="20%" >Log Data</th>
 								</tr>
 								<tr th:each="line : ${SeriObj.lineObjects}">
 									<td width="5%" th:text="${lineStat.index}"></td>
-									<td width="20%" th:inline="text"> <span>[[${line.seriId}]]</span></td>
+									<td width="20%" th:inline="text"> <span th:attr="title=${line.data}">[[${line.seriId}]]</span></td>
 									<td width="20%" th:text="${#calendars.format(line.date, 'yyyy-MM-dd hh:mm:ss,SSS')}"></td>
 									<td width="10%" th:text="${line.duration}"></td>
 									<td width="10%" th:text="${line.phone}"></td>
 									<td width="10%" th:text="${line.transactionId}"></td>
-									<td width="20%" th:inline="text"><p>[[${line.data}]]</p></td>
 								</tr>
 							</tbody>
 						</table>
